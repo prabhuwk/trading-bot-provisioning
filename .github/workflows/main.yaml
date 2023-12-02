@@ -1,0 +1,44 @@
+name: trading-bot-provisining
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+
+jobs:
+  terraform:
+    name: Provisioning
+    runs-on: ubuntu-latest
+
+    env:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_tfstate_resource_group: ${{ secrets.TF_VAR_TFSTATE_RESOURCE_GROUP }}
+      TF_VAR_tfstate_storage_account: ${{ secrets.TF_VAR_TFSTATE_STORAGE_ACCOUNT }}
+      TF_VAR_tfstate_storage_account_container: ${{ secrets.TF_VAR_TFSTATE_STORAGE_ACCOUNT_CONTAINER }}
+      TF_VAR_trading_bot_container_image: ${{ secrets.TF_VAR_TRADING_BOT_CONTAINER_IMAGE }}
+      TF_VAR_trading_bot_storage_account: ${{ secrets.TF_VAR_TRADING_BOT_STORAGE_ACCOUNT }}
+      TF_VAR_trading_bot_resource_group: ${{ secrets.TF_VAR_TRADING_BOT_RESOURCE_GROUP }}
+      TF_VAR_trading_bot_keyvault: ${{ secrets.TF_VAR_TRADING_BOT_KEYVAULT }}
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      run: terraform init -input=false
+      working-directory: "src/container_instance"
+
+    - name: Terraform Plan
+      run: terraform plan -input=false
+      working-directory: "src/container_instance"
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+      working-directory: "src/container_instance"
