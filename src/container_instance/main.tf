@@ -59,6 +59,6 @@ resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" 
   object_id = azurerm_container_group.test_trading_bot_banknifty.identity[0].principal_id
 
   secret_permissions = [
-    "get"
+    "Get"
   ]
 }
