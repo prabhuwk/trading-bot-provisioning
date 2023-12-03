@@ -18,7 +18,7 @@ jobs:
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       TF_VAR_tfstate_resource_group: ${{ secrets.TF_VAR_TFSTATE_RESOURCE_GROUP }}
       TF_VAR_tfstate_storage_account: ${{ secrets.TF_VAR_TFSTATE_STORAGE_ACCOUNT }}
-      TF_VAR_tfstate_storage_account_container: ${{ secrets.TF_VAR_TFSTATE_STORAGE_ACCOUNT_CONTAINER }}
+      TF_VAR_tfstate_storage_container: ${{ secrets.TF_VAR_TFSTATE_STORAGE_CONTAINER }}
       TF_VAR_trading_bot_container_image: ${{ secrets.TF_VAR_TRADING_BOT_CONTAINER_IMAGE }}
       TF_VAR_trading_bot_storage_account: ${{ secrets.TF_VAR_TRADING_BOT_STORAGE_ACCOUNT }}
       TF_VAR_trading_bot_resource_group: ${{ secrets.TF_VAR_TRADING_BOT_RESOURCE_GROUP }}
@@ -32,7 +32,11 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      run: terraform init -input=false
+      run: |
+        terraform init \
+          -backend-config="resource_group_name=$TF_VAR_tfstate_resource_group" \
+          -backend-config="storage_account_name=$TF_VAR_tfstate_storage_account" \
+          -backend-config="container_name=$TF_VAR_tfstate_storage_container"
       working-directory: "src/container_instance"
 
     - name: Terraform Plan
