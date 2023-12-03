@@ -23,6 +23,9 @@ jobs:
       TF_VAR_trading_bot_storage_account: ${{ secrets.TF_VAR_TRADING_BOT_STORAGE_ACCOUNT }}
       TF_VAR_trading_bot_resource_group: ${{ secrets.TF_VAR_TRADING_BOT_RESOURCE_GROUP }}
       TF_VAR_trading_bot_keyvault: ${{ secrets.TF_VAR_TRADING_BOT_KEYVAULT }}
+      TF_VAR_trading_bot_container_registry: ${{ secrets.TF_VAR_trading_bot_container_registry }}
+      TF_VAR_trading_bot_container_registry_username: ${{ secrets.TF_VAR_trading_bot_container_registry_username }}
+      TF_VAR_trading_bot_container_registry_password: ${{ secrets.TF_VAR_trading_bot_container_registry_password }}
 
     steps:
     - name: Checkout Repository

@@ -1,3 +1,21 @@
+variable "trading_bot_container_registry" {
+  description = "trading bot container registry name"
+  type        = string
+  sensitive   = true
+}
+
+variable "trading_bot_container_registry_username" {
+  description = "trading bot container registry username"
+  type        = string
+  sensitive   = true
+}
+
+variable "trading_bot_container_registry_password" {
+  description = "trading bot container registry password"
+  type        = string
+  sensitive   = true
+}
+
 variable "trading_bot_container_image" {
   description = "trading bot container image"
   type        = string

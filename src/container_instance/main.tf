@@ -27,6 +27,12 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
     memory = "1.5"
   }
 
+  image_registry_credential {
+    server   = var.trading_bot_container_registry
+    username = var.trading_bot_container_registry_username
+    password = var.trading_bot_container_registry_password
+  }
+
   ip_address_type = "None"
 
   identity {
