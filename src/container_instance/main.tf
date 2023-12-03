@@ -27,6 +27,12 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
     memory = "1.5"
   }
 
+  secure_environment_variables = {
+    "KEYVAULT_URL" = var.trading_bot_keyvault_url
+  }
+
+  commands = [ "/bin/bash", "-c", "python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production" ]
+
   image_registry_credential {
     server   = var.trading_bot_container_registry
     username = var.trading_bot_container_registry_username

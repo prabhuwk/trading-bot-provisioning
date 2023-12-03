@@ -39,3 +39,9 @@ variable "trading_bot_keyvault" {
   type        = string
   sensitive   = true
 }
+
+variable "trading_bot_keyvault_url" {
+  description = "trading bot keyvault url"
+  type        = string
+  sensitive   = true
+}
