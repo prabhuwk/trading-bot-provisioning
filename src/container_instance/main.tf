@@ -23,8 +23,8 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
   container {
     name   = "test-trading-bot-banknifty"
     image  = var.trading_bot_container_image
-    cpu    = "1"
-    memory = "1.5"
+    cpu    = "2"
+    memory = "4"
 
     secure_environment_variables = {
       "KEYVAULT_URL" = var.trading_bot_keyvault_url
