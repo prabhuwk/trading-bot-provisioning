@@ -30,6 +30,10 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
       "KEYVAULT_URL" = var.trading_bot_keyvault_url
     }
 
+    environment_variables = {
+      "TZ" = "Asia/Kolkata"
+    }
+
     commands = [ "/bin/bash", "-c", "python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production" ]
   }
   
