@@ -16,12 +16,6 @@ variable "trading_bot_container_registry_password" {
   sensitive   = true
 }
 
-variable "trading_bot_container_image" {
-  description = "trading bot container image"
-  type        = string
-  sensitive   = true
-}
-
 variable "trading_bot_storage_account" {
   description = "trading bot storage account name"
   type        = string
