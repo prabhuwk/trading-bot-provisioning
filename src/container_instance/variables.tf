@@ -28,6 +28,12 @@ variable "trading_bot_storage_account" {
   sensitive   = true
 }
 
+variable "trading_bot_storage_account_key" {
+  description = "trading bot storage account access key"
+  type        = string
+  sensitive   = true
+}
+
 variable "trading_bot_resource_group" {
   description = "trading bot resource group name"
   type        = string

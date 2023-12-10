@@ -20,11 +20,41 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
   resource_group_name = azurerm_resource_group.test_trading_bot.name
   os_type             = "Linux"
 
+  init_container {
+    name = "download-symbol-file"
+    image = "${var.trading_bot_container_registry}/bots/download-symbol-file:v1.0"
+    commands = ["/bin/sh", "-c", "./download_symbol_file.sh"]
+    environment_variables = {
+      "DOWNLOAD_URL" = "https://images.dhan.co/api-data/api-scrip-master.csv"
+      "DOWNLOAD_DIR" = "/download"
+    }
+    volume {
+        name = "download"
+        mount_path = "/download"
+        empty_dir = true
+    }
+  }
+
   container {
     name   = "test-trading-bot-banknifty"
-    image  = var.trading_bot_container_image
+    image  = "${var.trading_bot_container_registry}/bots/trading-bot:v1.1"
     cpu    = "4"
-    memory = "1"
+    memory = "2"
+
+    volume {
+      name = "download"
+      mount_path = "/download"
+      empty_dir = true
+    }
+
+    volume {
+      name = "upload"
+      mount_path = "/upload"
+      read_only = false
+      share_name = "trading-bot-fileshare"
+      storage_account_name = var.trading_bot_storage_account
+      storage_account_key = var.trading_bot_storage_account_key
+    }
 
     secure_environment_variables = {
       "KEYVAULT_URL" = var.trading_bot_keyvault_url

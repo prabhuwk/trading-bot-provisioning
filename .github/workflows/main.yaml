@@ -22,8 +22,8 @@ jobs:
       TF_VAR_tfstate_resource_group: ${{ secrets.TF_VAR_TFSTATE_RESOURCE_GROUP }}
       TF_VAR_tfstate_storage_account: ${{ secrets.TF_VAR_TFSTATE_STORAGE_ACCOUNT }}
       TF_VAR_tfstate_storage_container: ${{ secrets.TF_VAR_TFSTATE_STORAGE_CONTAINER }}
-      TF_VAR_trading_bot_container_image: ${{ secrets.TF_VAR_TRADING_BOT_CONTAINER_IMAGE }}
       TF_VAR_trading_bot_storage_account: ${{ secrets.TF_VAR_TRADING_BOT_STORAGE_ACCOUNT }}
+      TF_VAR_trading_bot_storage_account_key: ${{ secrets.TF_VAR_TRADING_BOT_STORAGE_ACCOUNT_KEY }}
       TF_VAR_trading_bot_resource_group: ${{ secrets.TF_VAR_TRADING_BOT_RESOURCE_GROUP }}
       TF_VAR_trading_bot_keyvault: ${{ secrets.TF_VAR_TRADING_BOT_KEYVAULT }}
       TF_VAR_trading_bot_keyvault_url: ${{ secrets.TF_VAR_TRADING_BOT_KEYVAULT_URL }}
