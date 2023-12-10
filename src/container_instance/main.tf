@@ -97,7 +97,7 @@ data "azurerm_key_vault" "trading_bot_keyvault" {
 resource "azurerm_role_assignment" "storage_access" {
   scope                = data.azurerm_storage_account.trading_bot_storage_account.id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_container_group.test_trading_bot_banknifty.identity[0].principal_id
+  principal_id         = azurerm_container_group.banknifty_trading_bot_banknifty.identity[0].principal_id
 }
 
 
