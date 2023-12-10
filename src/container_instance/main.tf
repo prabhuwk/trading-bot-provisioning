@@ -9,15 +9,15 @@ terraform {
 }
 
 
-resource "azurerm_resource_group" "test_trading_bot" {
-  name     = "test-trading-bot"
+resource "azurerm_resource_group" "banknifty_trading_bot" {
+  name     = "banknifty-trading-bot"
   location = "Central India"
 }
 
-resource "azurerm_container_group" "test_trading_bot_banknifty" {
-  name                = "test-trading-bot-banknifty"
-  location            = azurerm_resource_group.test_trading_bot.location
-  resource_group_name = azurerm_resource_group.test_trading_bot.name
+resource "azurerm_container_group" "banknifty_trading_bot_banknifty" {
+  name                = "banknifty-trading-bot-banknifty"
+  location            = azurerm_resource_group.banknifty_trading_bot.location
+  resource_group_name = azurerm_resource_group.banknifty_trading_bot.name
   os_type             = "Linux"
 
   init_container {
@@ -27,6 +27,7 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
     environment_variables = {
       "DOWNLOAD_URL" = "https://images.dhan.co/api-data/api-scrip-master.csv"
       "DOWNLOAD_DIR" = "/download"
+      "SYMBOL_NAME" = "BANKNIFTY"
     }
     volume {
         name = "download"
@@ -36,7 +37,7 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
   }
 
   container {
-    name   = "test-trading-bot-banknifty"
+    name   = "banknifty-trading-bot-banknifty"
     image  = "${var.trading_bot_container_registry}/bots/trading-bot:v1.1"
     cpu    = "4"
     memory = "2"
@@ -66,7 +67,7 @@ resource "azurerm_container_group" "test_trading_bot_banknifty" {
 
     # commands = [ "/bin/bash", "-c", "python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production" ]
     # enable following for troubleshooting only
-    commands = ["/bin/bash", "-c", "sleep 3600"]
+    commands = ["/bin/bash", "-c", "sleep 10000"]
   }
   
   image_registry_credential {
@@ -104,7 +105,7 @@ resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" 
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
 
   tenant_id = data.azurerm_key_vault.trading_bot_keyvault.tenant_id
-  object_id = azurerm_container_group.test_trading_bot_banknifty.identity[0].principal_id
+  object_id = azurerm_container_group.banknifty_trading_bot_banknifty.identity[0].principal_id
 
   secret_permissions = [
     "Get"
