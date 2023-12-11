@@ -65,7 +65,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "TZ" = "Asia/Kolkata"
     }
 
-    commands = ["/bin/bash", "-c", "sleep 120; python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
     # enable following for troubleshooting only
     # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
@@ -83,23 +83,10 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
   }
 }
 
-data "azurerm_storage_account" "trading_bot_storage_account" {
-  name                = var.trading_bot_storage_account
-  resource_group_name = var.trading_bot_resource_group
-}
-
 data "azurerm_key_vault" "trading_bot_keyvault" {
   name                = var.trading_bot_keyvault
   resource_group_name = var.trading_bot_resource_group
 }
-
-
-resource "azurerm_role_assignment" "storage_access" {
-  scope                = data.azurerm_storage_account.trading_bot_storage_account.id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_container_group.banknifty_trading_bot_acg.identity[0].principal_id
-}
-
 
 resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" {
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
