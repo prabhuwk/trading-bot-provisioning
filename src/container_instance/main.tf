@@ -22,7 +22,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   init_container {
     name = "download-symbol-file"
-    image = "${var.trading_bot_container_registry}/bots/download-symbol-file:v1.0"
+    image = "${var.trading_bot_container_registry}/trading-bot/download-symbol-file:v1.0"
     commands = ["/bin/sh", "-c", "./download_symbol_file.sh"]
     environment_variables = {
       "DOWNLOAD_URL" = "https://images.dhan.co/api-data/api-scrip-master.csv"
@@ -37,10 +37,10 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
   }
 
   container {
-    name   = "banknifty-trading-bot-banknifty"
-    image  = "${var.trading_bot_container_registry}/bots/trading-bot:v1.1"
-    cpu    = "4"
-    memory = "2"
+    name   = "banknifty-chart-data-collector"
+    image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.0"
+    cpu    = "2"
+    memory = "0.5"
 
     volume {
       name = "download"
