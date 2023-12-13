@@ -69,6 +69,23 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
     # enable following for troubleshooting only
     # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
+
+  container {
+    name = "banknifty-redis-queue"
+    image = "${var.trading_bot_container_registry}/trading-bot/redis:latest"
+    cpu = "1"
+    memory = "0.5"
+
+    ports {
+      port = 6379
+      protocol = "TCP"
+    }
+
+    environment_variables = {
+      "REDIS_HOST" = "localhost"
+      "REDIS_PORT" = "6379"
+    }
+  }
   
   image_registry_credential {
     server   = var.trading_bot_container_registry
