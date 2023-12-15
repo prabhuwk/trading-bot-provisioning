@@ -83,7 +83,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
     environment_variables = {
       "REDIS_HOST" = "localhost"
-      "REDIS_PORT" = "6379"
+      "REDIS_PORT" = 6379
     }
   }
   
