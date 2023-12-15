@@ -65,9 +65,9 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "TZ" = "Asia/Kolkata"
     }
 
-    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
-    # # enable following for troubleshooting only
-    # commands = ["/bin/bash", "-c", "sleep 10000"]
+    # commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
+    # enable following for troubleshooting only
+    commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
