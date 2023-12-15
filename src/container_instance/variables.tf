@@ -45,3 +45,15 @@ variable "trading_bot_keyvault_url" {
   type        = string
   sensitive   = true
 }
+
+variable "log_analytics_workspace_id" {
+  description = "log analytics workspace id"
+  type        = string
+  sensitive   = true
+}
+
+variable "log_analytics_workspace_key" {
+  description = "log analytics workspace key"
+  type        = string
+  sensitive   = true
+}

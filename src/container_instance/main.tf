@@ -65,9 +65,9 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "TZ" = "Asia/Kolkata"
     }
 
-    # commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
-    # enable following for troubleshooting only
-    commands = ["/bin/bash", "-c", "sleep 10000"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
+    # # enable following for troubleshooting only
+    # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
@@ -77,7 +77,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
     memory = "0.5"
 
     ports {
-      port = "6379"
+      port = 6379
       protocol = "TCP"
     }
 
@@ -97,6 +97,13 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   identity {
     type = "SystemAssigned"
+  }
+  
+  diagnostics {
+    log_analytics {
+      workspace_id = var.log_analytics_workspace_id
+      workspace_key = var.log_analytics_workspace_key
+    }
   }
 }
 

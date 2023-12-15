@@ -30,6 +30,8 @@ jobs:
       TF_VAR_trading_bot_container_registry: ${{ secrets.TF_VAR_trading_bot_container_registry }}
       TF_VAR_trading_bot_container_registry_username: ${{ secrets.TF_VAR_trading_bot_container_registry_username }}
       TF_VAR_trading_bot_container_registry_password: ${{ secrets.TF_VAR_trading_bot_container_registry_password }}
+      TF_VAR_log_analytics_workspace_id: ${{ secrets.TF_VAR_log_analytics_workspace_id }}
+      TF_VAR_log_analytics_workspace_key: ${{ secrets.TF_VAR_log_analytics_workspace_key }}
 
     steps:
     - name: Checkout Repository
