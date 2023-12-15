@@ -63,6 +63,8 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
     environment_variables = {
       "TZ" = "Asia/Kolkata"
+      "REDIS_HOST" = "localhost"
+      "REDIS_PORT" = "6379"
     }
 
     # commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange IDX --environment production"]
@@ -83,7 +85,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
     environment_variables = {
       "REDIS_HOST" = "localhost"
-      "REDIS_PORT" = 6379
+      "REDIS_PORT" = "6379"
     }
   }
   
