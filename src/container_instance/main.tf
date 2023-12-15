@@ -77,7 +77,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
     memory = "0.5"
 
     ports {
-      port = 6379
+      port = "6379"
       protocol = "TCP"
     }
 
