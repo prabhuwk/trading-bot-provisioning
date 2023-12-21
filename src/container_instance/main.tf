@@ -11,7 +11,7 @@ terraform {
 
 resource "azurerm_resource_group" "banknifty_trading_bot_rg" {
   name     = "banknifty-trading-bot"
-  location = "Southeast Asia"
+  location = "Central India"
 }
 
 resource "azurerm_container_group" "banknifty_trading_bot_acg" {
@@ -75,7 +75,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
   container {
     name   = "banknifty-order-management"
     image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.0"
-    cpu    = "2"
+    cpu    = "1"
     memory = "0.5"
 
     volume {
