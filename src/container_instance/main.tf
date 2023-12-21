@@ -73,6 +73,33 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
   }
 
   container {
+    name   = "banknifty-order-management"
+    image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.0"
+    cpu    = "2"
+    memory = "0.5"
+
+    volume {
+      name = "download"
+      mount_path = "/download"
+      empty_dir = true
+    }
+
+    secure_environment_variables = {
+      "KEYVAULT_URL" = var.trading_bot_keyvault_url
+    }
+
+    environment_variables = {
+      "TZ" = "Asia/Kolkata"
+      "REDIS_HOST" = "localhost"
+      "REDIS_PORT" = "6379"
+    }
+
+    commands = ["/bin/bash", "-c", "python src/main.py --symbol-name BANKNIFTY --exchange NSE --environment production"]
+    # enable following for troubleshooting only
+    # commands = ["/bin/bash", "-c", "sleep 10000"]
+  }
+
+  container {
     name = "banknifty-redis-queue"
     image = "${var.trading_bot_container_registry}/trading-bot/redis:latest"
     cpu = "1"
