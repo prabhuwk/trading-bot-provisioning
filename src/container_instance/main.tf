@@ -11,7 +11,7 @@ terraform {
 
 resource "azurerm_resource_group" "banknifty_trading_bot_rg" {
   name     = "banknifty-trading-bot"
-  location = "Central India"
+  location = "South India"
 }
 
 resource "azurerm_container_group" "banknifty_trading_bot_acg" {
