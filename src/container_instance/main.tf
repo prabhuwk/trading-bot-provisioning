@@ -38,7 +38,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   container {
     name   = "banknifty-chart-data-collector"
-    image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.0"
+    image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.1"
     cpu    = "2"
     memory = "0.5"
 
@@ -74,7 +74,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   container {
     name   = "banknifty-order-management"
-    image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.0"
+    image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.1"
     cpu    = "1"
     memory = "0.5"
 
@@ -94,7 +94,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "REDIS_PORT" = "6379"
     }
 
-    commands = ["/bin/bash", "-c", "python src/main.py --symbol-name BANKNIFTY --exchange NSE --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange NSE --environment production"]
     # enable following for troubleshooting only
     # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
