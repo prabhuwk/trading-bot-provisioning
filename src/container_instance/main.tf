@@ -11,15 +11,15 @@ terraform {
 
 resource "azurerm_resource_group" "trading_bot_rg" {
   for_each = var.indexes
-  name     = "${each.value}-trading-bot"
+  name     = "${lower(each.value)}-trading-bot"
   location = "Central India"
 }
 
 resource "azurerm_container_group" "trading_bot_acg" {
   for_each = var.indexes
-  name                = "${each.value}-trading-bot"
-  location            = azurerm_resource_group.trading_bot_rg["${each.value}"].location
-  resource_group_name = azurerm_resource_group.trading_bot_rg["${each.value}"].name
+  name                = "${lower(each.value)}-trading-bot"
+  location            = azurerm_resource_group.trading_bot_rg["${lower(each.value)}"].location
+  resource_group_name = azurerm_resource_group.trading_bot_rg["${lower(each.value)}"].name
   os_type             = "Linux"
 
   init_container {
@@ -39,7 +39,7 @@ resource "azurerm_container_group" "trading_bot_acg" {
   }
 
   container {
-    name   = "${each.value}-chart-data-collector"
+    name   = "${lower(each.value)}-chart-data-collector"
     image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.1"
     cpu    = "2"
     memory = "0.5"
@@ -75,7 +75,7 @@ resource "azurerm_container_group" "trading_bot_acg" {
   }
 
   container {
-    name   = "${each.value}-order-management"
+    name   = "${lower(each.value)}-order-management"
     image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.1"
     cpu    = "1"
     memory = "0.5"
@@ -148,7 +148,7 @@ resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" 
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
 
   tenant_id = data.azurerm_key_vault.trading_bot_keyvault.tenant_id
-  object_id = azurerm_container_group.trading_bot_acg["${each.value}"].identity[0].principal_id
+  object_id = azurerm_container_group.trading_bot_acg["${lower(each.value)}"].identity[0].principal_id
 
   secret_permissions = [
     "Get"
