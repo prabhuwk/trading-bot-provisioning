@@ -69,9 +69,9 @@ resource "azurerm_container_group" "trading_bot_acg" {
       "REDIS_PORT" = "6379"
     }
 
-    # commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${upper(each.value)} --exchange NSE --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${upper(each.value)} --exchange NSE --environment production"]
     # enable following for troubleshooting only
-    commands = ["/bin/bash", "-c", "sleep 10000"]
+    # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
@@ -96,9 +96,9 @@ resource "azurerm_container_group" "trading_bot_acg" {
       "REDIS_PORT" = "6379"
     }
 
-    # commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${upper(each.value)} --exchange NSE --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${upper(each.value)} --exchange NSE --environment production"]
     # enable following for troubleshooting only
-    commands = ["/bin/bash", "-c", "sleep 10000"]
+    # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
