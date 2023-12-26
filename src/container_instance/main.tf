@@ -147,7 +147,7 @@ resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" 
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
 
   tenant_id = data.azurerm_key_vault.trading_bot_keyvault.tenant_id
-  object_id = azurerm_container_group.trading_bot_acg.identity[0].principal_id
+  object_id = azurerm_container_group.trading_bot_acg["${each.value}"].identity[0].principal_id
 
   secret_permissions = [
     "Get"
