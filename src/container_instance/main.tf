@@ -38,7 +38,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   container {
     name   = "banknifty-chart-data-collector"
-    image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.1"
+    image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.0"
     cpu    = "2"
     memory = "0.5"
 
@@ -74,7 +74,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
 
   container {
     name   = "banknifty-order-management"
-    image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.1"
+    image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.0"
     cpu    = "1"
     memory = "0.5"
 
