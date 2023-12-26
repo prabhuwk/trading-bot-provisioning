@@ -144,6 +144,7 @@ data "azurerm_key_vault" "trading_bot_keyvault" {
 }
 
 resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" {
+  for_each = var.indexes
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
 
   tenant_id = data.azurerm_key_vault.trading_bot_keyvault.tenant_id
