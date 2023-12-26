@@ -57,3 +57,9 @@ variable "log_analytics_workspace_key" {
   type        = string
   sensitive   = true
 }
+
+variable "indexes" {
+  description = "list of indexes"
+  type = set(string)
+  default = [ "BANKNIFTY", "NIFTY" ]
+}

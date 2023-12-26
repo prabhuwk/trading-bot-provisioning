@@ -9,15 +9,17 @@ terraform {
 }
 
 
-resource "azurerm_resource_group" "banknifty_trading_bot_rg" {
-  name     = "banknifty-trading-bot"
+resource "azurerm_resource_group" "trading_bot_rg" {
+  for_each = var.indexes
+  name     = "${each.value}-trading-bot"
   location = "Central India"
 }
 
-resource "azurerm_container_group" "banknifty_trading_bot_acg" {
-  name                = "banknifty-trading-bot"
-  location            = azurerm_resource_group.banknifty_trading_bot_rg.location
-  resource_group_name = azurerm_resource_group.banknifty_trading_bot_rg.name
+resource "azurerm_container_group" "trading_bot_acg" {
+  for_each = var.indexes
+  name                = "${each.value}-trading-bot"
+  location            = azurerm_resource_group.trading_bot_rg.location
+  resource_group_name = azurerm_resource_group.trading_bot_rg.name
   os_type             = "Linux"
 
   init_container {
@@ -27,7 +29,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
     environment_variables = {
       "DOWNLOAD_URL" = "https://images.dhan.co/api-data/api-scrip-master.csv"
       "DOWNLOAD_DIR" = "/download"
-      "SYMBOL_NAME" = "BANKNIFTY"
+      "SYMBOL_NAME" = "${each.value}"
     }
     volume {
         name = "download"
@@ -37,7 +39,7 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
   }
 
   container {
-    name   = "banknifty-chart-data-collector"
+    name   = "${each.value}-chart-data-collector"
     image  = "${var.trading_bot_container_registry}/trading-bot/chart-data-collector:v1.1"
     cpu    = "2"
     memory = "0.5"
@@ -67,13 +69,13 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "REDIS_PORT" = "6379"
     }
 
-    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange NSE --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${each.value} --exchange NSE --environment production"]
     # enable following for troubleshooting only
     # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
-    name   = "banknifty-order-management"
+    name   = "${each.value}-order-management"
     image  = "${var.trading_bot_container_registry}/trading-bot/order-management:v1.1"
     cpu    = "1"
     memory = "0.5"
@@ -94,13 +96,13 @@ resource "azurerm_container_group" "banknifty_trading_bot_acg" {
       "REDIS_PORT" = "6379"
     }
 
-    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name BANKNIFTY --exchange NSE --environment production"]
+    commands = ["/bin/bash", "-c", "sleep 60;python src/main.py --symbol-name ${each.value} --exchange NSE --environment production"]
     # enable following for troubleshooting only
     # commands = ["/bin/bash", "-c", "sleep 10000"]
   }
 
   container {
-    name = "banknifty-redis-queue"
+    name = "${each.value}-redis-queue"
     image = "${var.trading_bot_container_registry}/trading-bot/redis:latest"
     cpu = "1"
     memory = "0.5"
@@ -145,7 +147,7 @@ resource "azurerm_key_vault_access_policy" "trading_bot_keyvault_access_policy" 
   key_vault_id = data.azurerm_key_vault.trading_bot_keyvault.id
 
   tenant_id = data.azurerm_key_vault.trading_bot_keyvault.tenant_id
-  object_id = azurerm_container_group.banknifty_trading_bot_acg.identity[0].principal_id
+  object_id = azurerm_container_group.trading_bot_acg.identity[0].principal_id
 
   secret_permissions = [
     "Get"
