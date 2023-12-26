@@ -18,8 +18,8 @@ resource "azurerm_resource_group" "trading_bot_rg" {
 resource "azurerm_container_group" "trading_bot_acg" {
   for_each = var.indexes
   name                = "${each.value}-trading-bot"
-  location            = azurerm_resource_group.trading_bot_rg.location
-  resource_group_name = azurerm_resource_group.trading_bot_rg.name
+  location            = azurerm_resource_group.trading_bot_rg["${each.value}"].location
+  resource_group_name = azurerm_resource_group.trading_bot_rg["${each.value}"].name
   os_type             = "Linux"
 
   init_container {
