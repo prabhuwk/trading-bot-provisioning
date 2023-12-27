@@ -113,6 +113,7 @@ resource "azurerm_container_group" "trading_bot_acg" {
     }
 
     environment_variables = {
+      "TZ" = "Asia/Kolkata"
       "REDIS_HOST" = "localhost"
       "REDIS_PORT" = "6379"
     }
