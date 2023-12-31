@@ -1,9 +1,9 @@
 name: trading-bot-provisining
 
 on:
-  # schedule:
+  schedule:
     # Runs at 3:40 AM UTC from Monday to Friday, which is 9:10 AM IST
-    # - cron: '40 3 * * 1-5'
+    - cron: '40 3 * * 1-5'
   push:
     branches:
       - development
