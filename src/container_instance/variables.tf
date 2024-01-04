@@ -61,5 +61,5 @@ variable "log_analytics_workspace_key" {
 variable "indexes" {
   description = "list of indexes"
   type = set(string)
-  default = [ "banknifty", "nifty" ]
+  default = [ "nifty" ]
 }
